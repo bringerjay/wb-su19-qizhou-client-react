@@ -1,12 +1,9 @@
 {
-  "name": "wbdv-su19-qizhou-client-react",
+  "name": "wbdv-su1-19-client-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
-    "browser-router": "^0.2.0",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.15.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
