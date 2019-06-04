@@ -11,20 +11,27 @@ export default class ModuleList
                 title: 'New Module'
             },
             modules: this.props.modules
-            //     [
-            //     {id: 123, title: 'Organic Chemistry'},
-            //     {id: 234, title: 'Economics 101'},
-            //     {id: 345, title: 'Quantum Physics'}
-            // ]
         }
     }
     createModule = () => {
         // this.state.module.push()
         this.state.module.id = (new Date()).getTime()
         this.setState({
-            modules: [this.state.module, ...this.state.modules]
+            modules: [...this.state.modules,this.state.module]
         })
     }
+    updateModule = (index) => {
+        console.log('updateModule ' + index)
+        const ms = this.state.modules
+        ms[index].title = this.state.module.title
+        this.setState({
+            modules: ms
+        })
+    }
+    highlightModule = () => {
+        console.log('selecting ')
+    }
+
     titleChanged = (event) => {
         console.log(event.target.value)
         this.setState({
@@ -59,9 +66,12 @@ export default class ModuleList
                         this.state.modules.map(
                             module =>
                                 <ModuleItem
+                                    updateModule={this.updateModule}
                                     deleteModule={this.deleteModule}
                                     module={module}
-                                    key={module.id}/>
+                                    index={this.state.modules.indexOf(module)}
+                                    highlightModule={this.highlightModule}
+                                />
                         )
                     }
                 </ul>

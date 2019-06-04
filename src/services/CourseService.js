@@ -20,6 +20,7 @@ export default class CourseService {
 
     deleteCourseById = courseId =>{
         courses = courses.filter(course => course.id !== courseId)
+        console.log("data"+courses )
     }
     findCourseById = courseId =>{
         return courses.find(course => course.id === courseId)

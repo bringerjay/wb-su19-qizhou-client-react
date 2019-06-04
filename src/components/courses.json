@@ -4,6 +4,7 @@
     "title": "CS5610",
     "modules": [
       {
+        "id": 1,
         "title": "Week 1",
         "lessons": [
           {
@@ -52,7 +53,7 @@
           }
         ]
       },
-      {
+      { "id": 2,
         "title": "Week 2",
         "lessons": []
       }

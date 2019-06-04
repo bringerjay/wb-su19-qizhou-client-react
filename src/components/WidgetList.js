@@ -1,5 +1,4 @@
 import React from 'react'
-
 const WidgetList = ({widgets}) =>
     <div>
         <h1>Widget List {widgets.length}</h1>

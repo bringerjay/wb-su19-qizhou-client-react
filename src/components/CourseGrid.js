@@ -120,7 +120,7 @@ export default class CourseTable extends React.Component {
                                     <Link to="/course-editor">editor</Link>
                                     <div className="card-group">
                                             {
-                                                    courses.map((course) =>
+                                                    this.state.courses.map((course) =>
                                                         <CourseCard course={course}
                                                                     deleteCourse={this.deleteCourse}/>)
                                             }

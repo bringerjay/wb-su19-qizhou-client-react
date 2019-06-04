@@ -2,10 +2,12 @@ import React from 'react';
 import 'jquery/dist/jquery.min.js';
 import "bootstrap/js/src/collapse.js";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {Link} from "react-router-dom";
+import {BrowserRouter as Router, Link, withRouter} from "react-router-dom";
 import courses from "./courses"
 import courseService from "../services/CourseService";
 import CourseRow from "./CourseRow";
+import CourseEditor from "./CourseEditor";
+import Route from "react-router-dom/es/Route";
 const myService = courseService.getInstance();
 export default class CourseTable extends React.Component {
     constructor(props) {
@@ -22,7 +24,7 @@ export default class CourseTable extends React.Component {
         console.log('creating a course' + this.state.course.title )
         this.state.course.id = (new Date()).getTime()
         myService.createCourse(this.state.course)
-        this.setState({courses: [this.state.course, ...this.state.courses]
+        this.setState({courses: [...this.state.courses,this.state.course]
         })
     }
     titleChanged = (event) => {
@@ -58,10 +60,10 @@ export default class CourseTable extends React.Component {
                     <div className="collapse navbar-collapse" id="navbarNav">
                         <ul className="navbar-nav mr-auto"
                             style={{marginLeft: '15px'}}>
-                            <li className="nav-item active">
+                            <li key= "CourseTable" className="nav-item active">
                                 <Link to="/">Course List</Link>
                             </li>
-                            <li className="nav-item">
+                            <li key= "CourseGrid" className="nav-item">
                                 <Link to="/course-grid">Course Grid</Link>
                             </li>
                         </ul>
@@ -71,7 +73,7 @@ export default class CourseTable extends React.Component {
                     }}>
                         <input
                             onChange={this.titleChanged}
-                            //defaultValue={this.state.course.title}
+                            defaultValue={this.state.course.title}
                             className="form-control" type="text"
                                placeholder="Search" aria-label="Search"
                                style={{width: '50rem', marginRight: '5px'}}/>
