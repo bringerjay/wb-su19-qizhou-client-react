@@ -1,6 +1,6 @@
 import React from 'react'
 import ModuleItem from './ModuleItem'
-
+import './ModuleList.css'
 export default class ModuleList
     extends React.Component {
     constructor(props) {
@@ -8,7 +8,7 @@ export default class ModuleList
         this.state = {
             module: {
                 id: -1,
-                title: 'New Module'
+                title: 'New Module',
             },
             modules: this.props.modules
         }
@@ -28,12 +28,10 @@ export default class ModuleList
             modules: ms
         })
     }
-    highlightModule = () => {
-        console.log('selecting ')
-    }
 
     titleChanged = (event) => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
+        console.log(event)
         this.setState({
             module: {
                 title: event.target.value,
@@ -70,7 +68,6 @@ export default class ModuleList
                                     deleteModule={this.deleteModule}
                                     module={module}
                                     index={this.state.modules.indexOf(module)}
-                                    highlightModule={this.highlightModule}
                                 />
                         )
                     }

@@ -6,32 +6,38 @@ import {Link} from "react-router-dom";
 
 export default class CourseEditor
     extends React.Component {
+
     constructor(props) {
         super(props)
         const pathname = window.location.pathname
         const paths = pathname.split('/')
         const courseId = paths[2]
-        console.log(courseId)
+        console.log(courseId,props.courses)
         this.courses = props.courses
         this.state = {
             courseId: courseId,
-            course: this.courses.find(course => course.id === courseId)
+            lessons: props.courses.find(course => course.id === courseId).modules[0].lessons,
+            course: props.courses.find(course => course.id === courseId),
+            topics: props.courses.find(course => course.id === courseId).modules[0].lessons[0].topics
         }
     }
     render() {
         return(
             <div>
                 <h2>{this.state.course.title} {this.state.course.id}</h2>
-                <Link to="/">Home</Link>
-                <Link to="/course-grid">CourseGrid</Link>
+                <Link to="/"><button>Home</button></Link>
+                <Link to="/course-grid"><button>CourseGrid</button></Link>
                 <div className="row">
                     <div className="col-4 left">
                         <ModuleList modules={this.state.course.modules}/>
                     </div>
                     <div className="col-8 right">
-                        <LessonTabs/>
+                        <LessonTabs
+                        lessons={this.state.lessons}
+                        />
                         <br/>
-                        <TopicPills/>
+                        <TopicPills
+                            topics={this.state.topics}/>
                     </div>
                 </div>
             </div>

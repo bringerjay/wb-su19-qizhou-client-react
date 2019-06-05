@@ -4,8 +4,9 @@
     "title": "CS5610",
     "modules": [
       {
-        "id": 1,
+        "mid": 1,
         "title": "Week 1",
+        "highlight": "off",
         "lessons": [
           {
             "title": "HTML",
@@ -53,7 +54,8 @@
           }
         ]
       },
-      { "id": 2,
+      { "mid": 2,
+        "highlight": "off",
         "title": "Week 2",
         "lessons": []
       }
