@@ -6,6 +6,7 @@ export default class ModuleList
     constructor(props) {
         super(props);
         this.state = {
+            highlight: 'off',
             module: {
                 id: -1,
                 title: 'New Module',
@@ -39,16 +40,21 @@ export default class ModuleList
             }
         })
     }
+    cleanHighlight = () =>{
+        //this.state.highlight
+        this.setState({highlight: "off"})
+
+    }
     deleteModule = (id) => {
         console.log('deleteModule ' + id)
         this.setState({
-            modules: this.state.modules.filter(module => module.id !== id)
+            modules: this.state.modules.filter(module => module.mid !== id)
         })
     }
 
     render() {
         return(
-            <div>
+            <div className="card module-sidebar">
                 <h3>Module List</h3>
                 <ul className="list-group">
                     <li className="list-group-item">
@@ -66,8 +72,10 @@ export default class ModuleList
                                 <ModuleItem
                                     updateModule={this.updateModule}
                                     deleteModule={this.deleteModule}
+                                    cleanHighlight={this.cleanHighlight}
                                     module={module}
                                     index={this.state.modules.indexOf(module)}
+                                    highlight={this.state.highlight}
                                 />
                         )
                     }

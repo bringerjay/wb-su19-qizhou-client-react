@@ -2,7 +2,8 @@ import React from 'react'
 import ModuleList from "./ModuleList";
 import LessonTabs from "./LessonTabs";
 import TopicPills from "./TopicPills";
-import {Link} from "react-router-dom";
+import {BrowserRouter as Router, Link, Route, withRouter} from 'react-router-dom'
+import WidgetListContainer from "../containers/WidgetListContainer"
 
 export default class CourseEditor
     extends React.Component {
@@ -12,12 +13,15 @@ export default class CourseEditor
         const pathname = window.location.pathname
         const paths = pathname.split('/')
         const courseId = paths[2]
-        console.log(courseId,props.courses)
+        const moduleId = paths[3]
+        const lessonTitle = paths[4]
+        console.log(courseId, props.courses)
         this.courses = props.courses
         this.state = {
             courseId: courseId,
-            lessons: props.courses.find(course => course.id === courseId).modules[0].lessons,
             course: props.courses.find(course => course.id === courseId),
+            Modules: props.courses.find(course => course.id === courseId).modules,
+            lessons: props.courses.find(course => course.id === courseId).modules[0].lessons,
             topics: props.courses.find(course => course.id === courseId).modules[0].lessons[0].topics
         }
     }
@@ -38,9 +42,11 @@ export default class CourseEditor
                         <br/>
                         <TopicPills
                             topics={this.state.topics}/>
+                        <br/>
+                        <WidgetListContainer/>
                     </div>
                 </div>
             </div>
-        )
+                  )
     }
 }

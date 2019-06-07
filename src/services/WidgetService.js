@@ -1,5 +1,3 @@
-import widgets from './widgets.json'
-
 export default class WidgetService {
     static myInstance = null;
     static getInstance() {
@@ -10,13 +8,21 @@ export default class WidgetService {
         return this.myInstance;
     }
 
-    createWidget = widget => {
-        widgets.push(widget)
-    }
-    findAllWidgets = () =>
-        widgets
+    createWidget = widget =>
+        fetch("http://localhost:8080/api/widgets",
+            {method: 'POST',
+            body: JSON.stringify(widget),
+            headers: {
+                'content-type': 'application/json'
+            }})
+            .then(function(response) {return response.json()})
 
-    findWidgetById = widgetId => {
+    findAllWidgets = () =>
+        fetch("http://localhost:8080/api/widgets")
+            .then(function(response) {return response.json()})
+        //widgets
+
+    /**findWidgetById = widgetId => {
         return widgets.find(widget => widget.id == widgetId)
     }
     deleteWidget = widgetId => {
@@ -29,5 +35,5 @@ export default class WidgetService {
             else
                 return newwidget;
         })
-    }
+    }**/
 }

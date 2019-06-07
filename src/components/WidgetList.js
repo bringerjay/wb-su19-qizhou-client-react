@@ -1,14 +1,25 @@
 import React from 'react'
-const WidgetList = ({widgets}) =>
-    <div>
-        <h1>Widget List {widgets.length}</h1>
-        <ul>
-            {
-                widgets.map(widget =>
-                <li>{widget.name}</li>
-                )
-            }
-        </ul>
-    </div>
 
-export default WidgetList
+export default class WidgetList extends React.Component{
+    constructor(props){
+        super(props)
+        this.props.findAllWidgets()
+        console.log(this.props.widgets)
+    }
+    render(){
+        return(
+            <div>
+                <h1>Widget List {this.props.widgets.length}</h1>
+                <ul>
+                    {
+                        this.props.widgets.map(widget =>
+                            <li>{widget.name}</li>
+                        )
+                    }
+                    <button onClick={this.props.createWidget}>Create</button>
+                </ul>
+            </div>
+
+        )
+    }
+}

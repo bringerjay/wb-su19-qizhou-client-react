@@ -1,5 +1,6 @@
 import React from 'react'
 import LessonTabList from './LessonTabList'
+import TopicPills from "./TopicPills";
 
 export default class LessonTabs extends React.Component {
     constructor(props) {
@@ -9,8 +10,8 @@ export default class LessonTabs extends React.Component {
                 id: -1,
                 title: 'New Lesson',
             },
-            lessons: this.props.lessons
-    }}
+            lessons: this.props.lessons,
+        }}
 
     titleChanged = (event) => {
         console.log(event)
