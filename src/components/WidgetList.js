@@ -1,10 +1,13 @@
 import React from 'react'
+import WidgetListItem from "./WidgetListItem";
 
 export default class WidgetList extends React.Component{
     constructor(props){
         super(props)
         this.props.findAllWidgets()
-        console.log(this.props.widgets)
+    }
+    state = {
+        editing: false
     }
     render(){
         return(
@@ -13,10 +16,14 @@ export default class WidgetList extends React.Component{
                 <ul>
                     {
                         this.props.widgets.map(widget =>
-                            <li>{widget.name}</li>
+                            <WidgetListItem
+                            widget={widget}
+                            deleteWidget={this.props.deleteWidget}
+                            updateWidget={this.props.updateWidget}
+                             />
                         )
                     }
-                    <button onClick={this.props.createWidget}>Create</button>
+                    <button onClick={()=> {this.props.createWidget()}}>Create</button>
                 </ul>
             </div>
 

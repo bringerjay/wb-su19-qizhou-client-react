@@ -11,7 +11,13 @@ const widgetReducer = (state = {widgets: []}, action) => {
                 widgets: action.widgets
             };
         case "DELETE_WIDGET":
-            break;
+            return {
+                widgets: action.widgets
+            };
+        case "UPDATE_WIDGET":
+            return {
+                widgets: action.widgets
+            };
         default:
             return state;
     }
