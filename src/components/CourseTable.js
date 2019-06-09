@@ -59,7 +59,6 @@ export default class CourseTable extends React.Component {
     }
     render() {
         return (
-            <Router>
             <div>
                 <nav className="navbar-dark bg-dark">
                     <a className="navbar-brand text-center" href="#"
@@ -121,7 +120,6 @@ export default class CourseTable extends React.Component {
                 />}
             </div>
             </div>
-            </Router>
     )
     }
 }

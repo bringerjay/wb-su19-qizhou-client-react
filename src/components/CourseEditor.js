@@ -33,7 +33,6 @@ export default class CourseEditor
     }
     render() {
         return(
-            <Router>
             <div>
                 <div className="editor-header">
                 <h2>{this.state.course.title} {this.state.course.id}</h2>
@@ -55,7 +54,6 @@ export default class CourseEditor
                     </div>
                 </div>
             </div>
-            </Router>
                   )
     }
 }

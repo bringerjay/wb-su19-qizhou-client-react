@@ -10,7 +10,6 @@ export default class CourseRow extends React.Component{
 
     render(){
     return(
-        <Router>
         <li className="list-group-item" key={this.props.course.id}>
             <div className="row">
             <Link className="offset-1 col-4"
@@ -28,7 +27,6 @@ export default class CourseRow extends React.Component{
                 </span>
         </div>
             </li>
-        </Router>
     )
     }
 }
