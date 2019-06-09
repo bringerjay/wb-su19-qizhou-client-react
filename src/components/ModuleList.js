@@ -5,7 +5,6 @@ export default class ModuleList
     constructor(props) {
         super(props);
         this.state = {
-            highlight: 'off',
             module: {
                 id: -1,
                 title: 'New Module',
@@ -39,11 +38,7 @@ export default class ModuleList
             }
         })
     }
-    cleanHighlight = () =>{
-        //this.state.highlight
-        this.setState({highlight: "off"})
 
-    }
     deleteModule = (id) => {
         console.log('deleteModule ' + id)
         this.setState({
@@ -73,10 +68,9 @@ export default class ModuleList
                                 <ModuleItem
                                     updateModule={this.updateModule}
                                     deleteModule={this.deleteModule}
-                                    cleanHighlight={this.cleanHighlight}
+                                    toggleHighlight={this.toggleHighlight}
                                     module={module}
                                     index={this.state.modules.indexOf(module)}
-                                    highlight={this.state.highlight}
                                 />
                         )
                     }

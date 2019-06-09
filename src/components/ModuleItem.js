@@ -7,21 +7,22 @@ export default class ModuleItem
     constructor(props) {
     super(props);
     this.state = {
-            highlight: this.props.highlight,
+            highlight: " ",
             title: this.props.module.title
         }
     }
-    highlightModule = () => {
-        this.props.cleanHighlight()
-        if (this.state.highlight === 'off')
-            this.setState({highlight: 'on'});
-        else this.setState({highlight: 'off'})
-        console.log(this.state.title,this.state.highlight)
+    toggleHighlight = () =>{
+        if (this.state.highlight === " ")
+            this.setState({ highlight: "active"})
+        else {
+            this.setState({ highlight: " " })
+        }
     }
     render() {
         return(
-            <li className={"list-group-item"+this.state.highlight} onClick={() => this.highlightModule()}>
-            {this.props.module.title}
+            <li className={"list-group-item "+this.state.highlight}
+                onClick={() => this.toggleHighlight()}>
+            {this.props.module.title+this.state.highlight}
             <div className="float-right">
                 <FontAwesomeIcon icon={faEdit} type="button"
                                  onClick={() => this.props.updateModule(this.props.index)}/>
