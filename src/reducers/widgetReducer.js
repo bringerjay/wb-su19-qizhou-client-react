@@ -1,6 +1,3 @@
-import widgetService from '../services/WidgetService'
-const service = widgetService.getInstance();
-
 const widgetReducer = (state = {widgets: []}, action) => {
     switch (action.type) {
         case "CREATE_WIDGET":

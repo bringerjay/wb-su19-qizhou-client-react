@@ -4,8 +4,7 @@ import WidgetListItem from "./WidgetListItem";
 export default class WidgetList extends React.Component{
     constructor(props){
         super(props)
-        this.props.findAllWidgets()
-    }
+      this.props.findAllWidgets()}
     state = {
         editing: false
     }

@@ -1,4 +1,3 @@
-import React from 'react'
 import WidgetList from '../components/WidgetList'
 import {connect} from 'react-redux'
 import service from '../services/WidgetService'

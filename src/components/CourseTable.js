@@ -3,71 +3,69 @@ import 'jquery/dist/jquery.min.js';
 import "bootstrap/js/src/collapse.js";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {BrowserRouter as Router, Link, withRouter} from "react-router-dom";
-import courses from "./courses"
-import courseService from "../services/CourseService";
-import CourseRow from "./CourseRow";
-import CourseEditor from "./CourseEditor";
-import Route from "react-router-dom/es/Route";
-const myService = courseService.getInstance();
+import service from "../services/CourseService";
+import CourseGrid from "./CourseGrid";
+import CourseList from "./CourseList";
+import '../styles/CourseTable.css'
+import {faPlusCircle, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+const courseService = service.getInstance();
 export default class CourseTable extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
+            list: true,
+            style: "list view",
             course: {
                 id: -1,
                 title: 'New Course'
             },
-            courses: courses}
+            courses: courseService.findAllCourses()}
     }
     createCourse = () => {
         // this.state.module.push()
         console.log('creating a course' + this.state.course.title )
         this.state.course.id = (new Date()).getTime()
-        myService.createCourse(this.state.course)
-        this.setState({courses: [...this.state.courses,this.state.course]
-        })
-    }
+        this.setState({courses: [...this.state.courses,courseService.createCourse(this.state.course)]
+        })}
     titleChanged = (event) => {
         console.log(event.target.value)
         this.setState({
-            course: {
+            course:{
                 title: event.target.value,
                 id: (new Date()).getTime()
             }
         })
-    }
+            }
     deleteCourse = (id) => {
         console.log('deleteCourse ' + id)
-        myService.deleteCourseById(id)
         this.setState({
-            courses: this.state.courses.filter(course => course.id !== id)
+            courses: courseService.deleteCourseById(id)
         })
-        console.log(myService.findAllCourses())
+        console.log(courseService.findAllCourses())
+    }
+    onToggle = () => {
+        if (this.state.style === "grid view")
+            this.setState({ style: "list view"})
+        else {
+            this.setState({ style: "grid view" })
+        }
+        this.setState({ list: !this.state.list })
+    }
+    updateCourse = (id,newtitle) =>{
+        this.setState({
+            courses: courseService.updateCourse(id,newtitle)
+        })
     }
     render() {
         return (
-            <div>
-                <div className="row">
+            <Router>
             <div>
                 <nav className="navbar-dark bg-dark">
                     <a className="navbar-brand text-center" href="#"
-                       style={{marginLeft: '15px', height: '80px', marginTop: '25px'}}>Course Manager</a>
-                    <button className="navbar-toggler"
-                            type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarNav">
-                        <ul className="navbar-nav mr-auto"
-                            style={{marginLeft: '15px'}}>
-                            <li key= "CourseTable" className="nav-item active">
-                                <Link to="/">Course List</Link>
-                            </li>
-                            <li key= "CourseGrid" className="nav-item">
-                                <Link to="/course-grid">Course Grid</Link>
-                            </li>
-                        </ul>
-                    </div>
+                    >Course Manager</a>
+                    <button type="button" className="btn btn-success"
+                    onClick={this.onToggle}>{this.state.style}</button>
                     <form className="nav-item form-inline float-lg-right" style={{
                         marginTop: '30px'
                     }}>
@@ -77,44 +75,53 @@ export default class CourseTable extends React.Component {
                             className="form-control" type="text"
                                placeholder="Search" aria-label="Search"
                                style={{width: '50rem', marginRight: '5px'}}/>
-                        <button type="button" onClick = {() => {this.createCourse()}}
-                                style={{marginLeft: '20px', marginRight: '10px'}}>Add</button>
+                        <FontAwesomeIcon icon={faPlusCircle} type="button"
+                                         className="add fa-2x"
+                                         onClick = {() => {
+                                             console.log(this.state.courses)
+                                             this.createCourse()}}/>
                     </form>
                 </nav>
-            </div>
-                </div>
                 <div className="row">
-            <nav className="navbar navbar-light bg-light"
-                 style={{height: '80px',marginTop: '0px'}}>
+                <table className="table-header w-100">
+                    <tr>
+                        <td className="col-5">
+                            <a className="title-col offset-2">
+                                Title</a>
+                        </td>
+                        <td className="col-2">
+                            <a className="dropdown-toggle ownership"
+                               href="#" id="navbarDropdownMenuLink"
+                               role="button" data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false">Owned by</a>
+                            <div className="dropdown-menu offset-3 col-2" aria-labelledby="navbarDropdownMenuLink">
+                                <a className="dropdown-item" href="#">Login</a>
+                                <a className="dropdown-item" href="#">Register</a>
+                                <a className="dropdown-item" href="#">Profile</a>
+                            </div>
+                        </td>
+                        <td className="col-2">
+                            <a className="modified" style={{marginLeft: '5px'}}>Last modified by me</a>
+                        </td>
+                    </tr>
+                </table>
+                </div>
                 <div className="container-fluid">
-                <a className="nav-item"
-                   style={{marginLeft: '120px'}}>Title</a>
-                <a className="nav-item dropdown-toggle"
-                   href="#" id="navbarDropdownMenuLink"
-                   role="button" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Dropdown(test)</a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a className="dropdown-item" href="#">Login</a>
-                    <a className="dropdown-item" href="#">Register</a>
-                    <a className="dropdown-item" href="#">Profile</a>
-                </div>
-                <a className="nav-item" style={{marginLeft: '5px'}}>Last modified by me</a>
+                {this.state.list && <CourseList
+                    courses={this.state.courses}
+                    newcourse={this.state.course}
+                    deleteCourse={this.deleteCourse}
+                    updateCourse={this.updateCourse}
+                />}
+                {!this.state.list && <CourseGrid
+                    courses={this.state.courses}
+                    newcourse={this.state.course}
+                    deleteCourse={this.deleteCourse}
+                    updateCourse={this.updateCourse}
+                />}
             </div>
-                </nav>
-                </div>
-                <div style={{width: '58rem'}}>
-                    <h1>Course List</h1>
-                    <div className="list-group">
-                        {
-                            this.state.courses.map(course =>
-                                <CourseRow course={course}
-                                           deleteCourse={this.deleteCourse}/>
-                            )
-                        }
-
-                    </div>
-                </div>
             </div>
-        )
+            </Router>
+    )
     }
 }

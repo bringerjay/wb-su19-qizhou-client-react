@@ -1,6 +1,6 @@
 [
   {
-    "id": "123",
+    "id": 123,
     "title": "CS5610",
     "modules": [
       {
@@ -62,22 +62,22 @@
     ]
   },
   {
-    "id": "234",
+    "id": 234,
     "title": "CS5200",
     "modules": []
   },
   {
-    "id": "345",
+    "id": 345,
     "title": "CS3500",
     "modules": []
   },
   {
-    "id": "456",
+    "id": 456,
     "title": "CS4500",
     "modules": []
   },
   {
-    "id": "567",
+    "id": 567,
     "title": "CS5500",
     "modules": [
       {

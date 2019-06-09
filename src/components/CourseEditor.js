@@ -4,33 +4,41 @@ import LessonTabs from "./LessonTabs";
 import TopicPills from "./TopicPills";
 import {BrowserRouter as Router, Link, Route, withRouter} from 'react-router-dom'
 import WidgetListContainer from "../containers/WidgetListContainer"
-
+import service from "../services/CourseService";
+import '../styles/CourseEditor.css'
+const courseService = service.getInstance();
 export default class CourseEditor
     extends React.Component {
-
     constructor(props) {
         super(props)
         const pathname = window.location.pathname
         const paths = pathname.split('/')
         const courseId = paths[2]
-        const moduleId = paths[3]
-        const lessonTitle = paths[4]
-        console.log(courseId, props.courses)
-        this.courses = props.courses
+        //const moduleId = paths[3]
+        //const lessonTitle = paths[4]
+        const currentCourses = courseService.findAllCourses()
+        const currentCourse = courseService.findCourseById(courseId)
+        console.log(courseId, currentCourses,currentCourse)
+        const currentModules = currentCourse.modules
+        const currentLessons = currentModules[0].lessons
+        const currentTopics = currentLessons[0].topics
         this.state = {
+            courses: currentCourses,
             courseId: courseId,
-            course: props.courses.find(course => course.id === courseId),
-            Modules: props.courses.find(course => course.id === courseId).modules,
-            lessons: props.courses.find(course => course.id === courseId).modules[0].lessons,
-            topics: props.courses.find(course => course.id === courseId).modules[0].lessons[0].topics
+            course: currentCourse,
+            Modules: currentModules,
+            lessons: currentLessons,
+            topics: currentTopics
         }
     }
     render() {
         return(
+            <Router>
             <div>
+                <div className="editor-header">
                 <h2>{this.state.course.title} {this.state.course.id}</h2>
                 <Link to="/"><button>Home</button></Link>
-                <Link to="/course-grid"><button>CourseGrid</button></Link>
+                </div>
                 <div className="row">
                     <div className="col-4 left">
                         <ModuleList modules={this.state.course.modules}/>
@@ -47,6 +55,7 @@ export default class CourseEditor
                     </div>
                 </div>
             </div>
+            </Router>
                   )
     }
 }

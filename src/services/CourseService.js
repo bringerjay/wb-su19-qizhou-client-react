@@ -1,5 +1,5 @@
 import jcourses from '../components/courses.json'
-var courses = jcourses;
+let courses = jcourses
 export default class CourseService {
     static myInstance = null;
 
@@ -12,26 +12,31 @@ export default class CourseService {
     }
 
     createCourse = course => {
-        //courses = courses.add
+        console.log(courses)
+        courses.push(course)
         console.log(courses )
-        return courses
+        return course
     }
-    findAllCourses = () => courses
+    findAllCourses = () =>
+        courses
 
     deleteCourseById = courseId =>{
-        courses = courses.filter(course => course.id !== courseId)
-        console.log("data"+courses )
+        console.log(courseId)
+        courses= courses.filter(course => course.id !== courseId)
+        return courses
     }
     findCourseById = courseId =>{
-        return courses.find(course => course.id === courseId)
+        const course = courses.find(course => course.id === parseInt(courseId))
+        return course
     }
-    updateCourse = (id,newcourse) => {
+    updateCourse = (id,newtitle) => {
         courses = courses.map(course=>
         {
             if (course.id !== id)
                 return course;
             else
-                return newcourse;
-        })
+            { course.title = newtitle;
+                return course;}})
+        return courses
     }
 }

@@ -1,0 +1,10 @@
+body{
+    background: white;
+}
+.editor-header
+{
+    color: yellow;
+    background-color: #282c34;
+}
+.module-panel{
+margin-left: 20px}

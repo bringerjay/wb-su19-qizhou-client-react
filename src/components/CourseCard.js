@@ -1,8 +1,8 @@
 import React from 'react'
 import {Link, withRouter} from "react-router-dom";
 
-const CourseCard = ({course,deleteCourse}) =>
-            <div className="card" styles={{width: '18rem'}}>
+const CourseCard = ({course,deleteCourse,updateCourse,newcourse}) =>
+            <div className="card col-lg-2 col-md-4 col-sm-10">
                 <img className="card-img-top"
                      src="https://picsum.photos/300/200"/>
                 <div className="card-body">

@@ -1,6 +1,5 @@
 import React from 'react'
 import ModuleItem from './ModuleItem'
-import './ModuleList.css'
 export default class ModuleList
     extends React.Component {
     constructor(props) {
@@ -54,7 +53,7 @@ export default class ModuleList
 
     render() {
         return(
-            <div className="card module-sidebar">
+            <div className="card module-panel">
                 <h3>Module List</h3>
                 <ul className="list-group">
                     <li className="list-group-item">
@@ -66,6 +65,8 @@ export default class ModuleList
                             Add Module
                         </button>
                     </li>
+                </ul>
+                    <ul>
                     {
                         this.state.modules.map(
                             module =>
