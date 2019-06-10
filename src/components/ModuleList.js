@@ -4,12 +4,16 @@ export default class ModuleList
     extends React.Component {
     constructor(props) {
         super(props);
+        let initHighlight = Array(this.props.modules.length).fill(" ")
+        initHighlight[0]="active"
+        console.log(initHighlight)
         this.state = {
             module: {
                 id: -1,
                 title: 'New Module',
             },
-            modules: this.props.modules
+            modules: this.props.modules,
+            highlight: initHighlight
         }
     }
     createModule = () => {
@@ -45,6 +49,16 @@ export default class ModuleList
             modules: this.state.modules.filter(module => module.mid !== id)
         })
     }
+    handleHighlight = (index) => {
+        let highlightHelper = Array(this.props.modules.length).fill(" ")
+        highlightHelper[index]="active"
+        this.setState({highlight: highlightHelper},
+            () =>
+            {
+                console.log(this.state.highlight)
+            })
+        console.log(highlightHelper)
+    }
 
     render() {
         return(
@@ -68,9 +82,11 @@ export default class ModuleList
                                 <ModuleItem
                                     updateModule={this.updateModule}
                                     deleteModule={this.deleteModule}
-                                    toggleHighlight={this.toggleHighlight}
                                     module={module}
                                     index={this.state.modules.indexOf(module)}
+                                    selectModule={this.props.selectModule}
+                                    highlight={this.state.highlight}
+                                    handleHighlight={this.handleHighlight}
                                 />
                         )
                     }

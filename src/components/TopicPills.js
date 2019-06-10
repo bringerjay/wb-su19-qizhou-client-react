@@ -4,12 +4,16 @@ import TopicList from "./TopicList";
 export default class LessonTabs extends React.Component {
     constructor(props) {
         super(props);
+        let initHighlight = Array(this.props.topics.length).fill(" ")
+        initHighlight[0]="active"
+        console.log(initHighlight)
         this.state = {
             topicnew: {
                 id: -1,
                 title: 'New Topic',
             },
-            topics: this.props.topics
+            topics: this.props.topics,
+            highlight: initHighlight
         }
     }
     titleChanged = (event) => {
@@ -43,6 +47,17 @@ export default class LessonTabs extends React.Component {
             topics: this.state.topics.filter(topic => topic.title !== title)
         })
     }
+    handleHighlight = (index) => {
+        let highlightHelper = Array(this.props.topics.length).fill(" ")
+        highlightHelper[index]="active"
+        this.setState({highlight: highlightHelper},
+            () =>
+            {
+                console.log(this.state.highlight)
+            })
+        console.log(highlightHelper)
+    }
+
     render() {
         return (
             <ul className="nav nav-pills">
@@ -52,7 +67,9 @@ export default class LessonTabs extends React.Component {
                         topic={topic}
                         index={this.state.topics.indexOf(topic)}
                         updateTopic={this.updateTopic}
-                    deleteTopic={this.deleteTopic}/>
+                    deleteTopic={this.deleteTopic}
+                        highlight={this.state.highlight}
+                        handleHighlight={this.handleHighlight}/>
                 )}
                 <li className="list-group-item">
                     <input

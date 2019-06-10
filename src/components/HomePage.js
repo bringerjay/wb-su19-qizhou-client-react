@@ -20,12 +20,10 @@ export default class HomePage extends React.Component{
         return(
             <Provider store={store}>
                 <Router>
-                    <switch>
-                    <Route exact path={"/"}
+                  <Route exact path={"/"}
                            component={withRouter(CourseTable)}/>
                     <Route path={"/course-editor/:courseId"}
                            component={withRouter(CourseEditor)}/>
-                    </switch>
                 </Router>
             </Provider>
         )

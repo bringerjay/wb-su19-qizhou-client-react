@@ -10,9 +10,9 @@ export default class WidgetList extends React.Component{
     }
     render(){
         return(
-            <div>
+            <div className="container">
                 <h1>Widget List {this.props.widgets.length}</h1>
-                <ul>
+                <div className="row">
                     {
                         this.props.widgets.map(widget =>
                             <WidgetListItem
@@ -22,9 +22,9 @@ export default class WidgetList extends React.Component{
                              />
                         )
                     }
-                    <button onClick={()=> {this.props.createWidget()}}>Create</button>
-                </ul>
             </div>
+            <button onClick={()=> {this.props.createWidget()}}>Create a New Widget</button>
+                </div>
 
         )
     }

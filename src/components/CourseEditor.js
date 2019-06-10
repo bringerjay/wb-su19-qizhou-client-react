@@ -19,17 +19,107 @@ export default class CourseEditor
         const currentCourses = courseService.findAllCourses()
         const currentCourse = courseService.findCourseById(courseId)
         console.log(courseId, currentCourses,currentCourse)
-        const currentModules = currentCourse.modules
-        const currentLessons = currentModules[0].lessons
-        const currentTopics = currentLessons[0].topics
+        let currentModules =[]
+        let currentLessons =[]
+        let currentTopics =[]
+        let selectedLesson= []
+        let selectedModule= []
+        let selectedTopic = []
+        if (currentCourse.modules.length>0)
+        {currentModules = currentCourse.modules
+                selectedModule= currentModules[0]
+            if (selectedModule.lessons.length>0) {
+                currentLessons = selectedModule.lessons
+                selectedLesson=currentLessons[0]
+            if (selectedLesson.topics.length>0) {
+                currentTopics = selectedLesson.topics
+                selectedTopic= currentTopics[0]
+            }
+            }
+        }
         this.state = {
             courses: currentCourses,
             courseId: courseId,
             course: currentCourse,
-            Modules: currentModules,
+            modules: currentModules,
             lessons: currentLessons,
-            topics: currentTopics
+            topics: currentTopics,
+            selectedLesson: selectedLesson,
+            selectedModule: selectedModule,
+            selectedTopic: selectedTopic
         }
+        console.log(this.state.modules,this.state.selectedModule)
+        console.log(this.state.lessons,
+            this.state.selectedLesson,this.state.selectedModule
+        , this.state.selectedTopic)
+        console.log(typeof (this.state.lessons === 'undefined'
+            || this.state.lessons.length < 1))
+    }
+    selectModule = (module) => {
+        console.log(module)
+        let setLessons =[]
+        let setLesson= []
+        let setTopics =[]
+        let setTopic = []
+        console.log(module.lessons)
+        if (typeof module.lessons !== 'undefined')
+        {
+            if (module.lessons.length > 0)
+            {console.log(module.lessons)
+            setLessons = module.lessons
+            setLesson= setLessons[0]
+            console.log(setLesson)
+            if (typeof module.lessons[0].topics !== 'undefined'
+            && module.lessons[0].topics.length > 0) {
+                setTopics = module.lessons[0].topics
+                setTopic= setTopics[0]
+            }}
+
+        }
+        console.log(setLessons,setTopics,setLesson,setTopic)
+        this.setState({
+                selectedModule: module,
+                lessons: setLessons,
+                topics: setTopics,
+                selectedLesson: setLesson,
+                selectedTopic: setTopic
+            },
+            () =>
+            {
+                console.log(this.state.topics, this.state.lessons, this.state.selectedLesson, this.state.selectedTopic)
+            })
+        console.log(this.state.lessons === 'undefined'
+            || this.state.lessons.length < 1)
+        }
+    selectLesson = (lesson) => {
+        console.log(module)
+        let setTopics =[]
+        let setTopic = []
+        console.log(lesson.topics)
+        if (typeof lesson.topics !== 'undefined') {
+            if (lesson.topics.length > 0)
+            {
+                console.log(lesson.topics)
+                setTopics = lesson.topics
+                setTopic = setTopics[0]
+                console.log(setTopic)
+            }
+        }
+        console.log(setTopics,setTopic)
+        this.setState({
+                selectedLesson: lesson,
+                topics: setTopics,
+                selectedTopic: setTopic
+            },
+            () =>
+            {
+                console.log(this.state.selectedLesson, this.state.topics, this.state.selectedTopic)
+            })
+        console.log(this.state.topics === 'undefined'
+            || this.state.topics.length < 1)
+    }
+    selectTopic = (topic) => {
+        this.setState({ selectedModule: module})
     }
     render() {
         return(
@@ -40,15 +130,26 @@ export default class CourseEditor
                 </div>
                 <div className="row">
                     <div className="col-4 left">
-                        <ModuleList modules={this.state.course.modules}/>
+                        {this.state.modules.length > 0 && <ModuleList
+                            modules={this.state.modules}
+                            selectModule={this.selectModule}
+                        />}
+                        {this.state.modules.length < 1 && "No Modules was recorded"}
                     </div>
                     <div className="col-8 right">
-                        <LessonTabs
+                        {this.state.lessons.length > 0 && <LessonTabs
                         lessons={this.state.lessons}
-                        />
+                        selectLesson={this.selectLesson}
+                        />}
+                        {this.state.lessons.length < 1
+                         && "No Lessons Were " +
+                        "Recorded For The Selected Module"}
                         <br/>
-                        <TopicPills
-                            topics={this.state.topics}/>
+                        <br/>
+                        {this.state.topics.length > 0 && <TopicPills
+                            topics={this.state.topics}/>}
+                        {this.state.topics.length < 1 && "No Topics Were " +
+                        "Recorded For The Selected Lesson"}
                         <br/>
                         <WidgetListContainer/>
                     </div>

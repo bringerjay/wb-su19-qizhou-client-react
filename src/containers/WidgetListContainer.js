@@ -13,7 +13,8 @@ const propertyToDispatchMapper = dispatch => ({
         .createWidget({
             id: 1,
             name: 'New Widget',
-            type: 'HEADING'
+            type: 'HEADING',
+            size: 1
             }).then(widgets =>
         dispatch({
             type: 'CREATE_WIDGET',

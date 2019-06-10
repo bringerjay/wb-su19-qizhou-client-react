@@ -1,28 +1,26 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faEdit, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import '../styles/ModuleItem.css'
 export default class ModuleItem
     extends React.Component {
     constructor(props) {
     super(props);
     this.state = {
-            highlight: " ",
             title: this.props.module.title
         }
+        console.log(this.props.index,this.props.highlight)
     }
     toggleHighlight = () =>{
-        if (this.state.highlight === " ")
-            this.setState({ highlight: "active"})
-        else {
-            this.setState({ highlight: " " })
-        }
+        this.props.handleHighlight(this.props.index)
+        this.props.selectModule(this.props.module)
+        console.log(this.props.module)
+        console.log(this.props.index,this.props.highlight)
     }
     render() {
         return(
-            <li className={"list-group-item "+this.state.highlight}
+            <li className={"list-group-item "+this.props.highlight[this.props.index]}
                 onClick={() => this.toggleHighlight()}>
-            {this.props.module.title+this.state.highlight}
+            {this.props.module.title+this.props.highlight[this.props.index]}
             <div className="float-right">
                 <FontAwesomeIcon icon={faEdit} type="button"
                                  onClick={() => this.props.updateModule(this.props.index)}/>
