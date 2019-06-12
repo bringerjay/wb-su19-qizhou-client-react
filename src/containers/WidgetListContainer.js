@@ -4,7 +4,8 @@ import service from '../services/WidgetService'
 const widgetService = service.getInstance();
 
 const stateToPropertyMapper = state => ({
-    widgets: state.widgets
+    widgets: state.widgets,
+    length: state.widgets.length
 })
 
 const propertyToDispatchMapper = dispatch => ({
@@ -14,7 +15,10 @@ const propertyToDispatchMapper = dispatch => ({
             id: 1,
             name: 'New Widget',
             type: 'HEADING',
-            size: 1
+            size: 'h1',
+            text: 'hello world',
+            list: 'ul',
+            url:  'www.amazon.com'
             }).then(widgets =>
         dispatch({
             type: 'CREATE_WIDGET',
@@ -22,6 +26,14 @@ const propertyToDispatchMapper = dispatch => ({
         })
     )
     ,
+        moveUp: (index) =>
+                        dispatch({type: 'MOVE_UP_WIDGET',
+                            index: index})
+    ,
+        moveDown: (index) =>
+        dispatch({type: 'MOVE_DOWN_WIDGET',
+        index: index})
+        ,
     updateWidget: (newWidget) =>
         widgetService
             .updateWidget(newWidget).then(widgets =>
@@ -31,6 +43,15 @@ const propertyToDispatchMapper = dispatch => ({
             })
         )
     ,
+        saveChanges: (preview) =>
+            widgetService
+            .saveChanges(preview).then(widgets =>
+                dispatch({
+                    type: 'SAVE_CHANGES',
+                    widgets: widgets
+                })
+            )
+        ,
     deleteWidget: (widgetId) =>
         widgetService.deleteWidget(widgetId)
             .then(widgets =>

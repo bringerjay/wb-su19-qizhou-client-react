@@ -1,5 +1,6 @@
 import jcourses from '../components/courses.json'
 let courses = jcourses
+let id = 6
 export default class CourseService {
     static myInstance = null;
 
@@ -13,6 +14,8 @@ export default class CourseService {
 
     createCourse = course => {
         console.log(courses)
+        course.id = id
+        id ++
         courses.push(course)
         console.log(courses )
         return course

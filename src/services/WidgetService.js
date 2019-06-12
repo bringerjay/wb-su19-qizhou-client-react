@@ -51,5 +51,17 @@ export default class WidgetService {
             .then(function (response) {
                 return response.json()
             })
+    saveChanges = preview =>
+        fetch(`http://localhost:8080/api/widgets`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(preview),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then(function (response) {
+                return response.json()
+            })
 
 }

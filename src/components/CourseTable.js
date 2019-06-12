@@ -21,6 +21,7 @@ export default class CourseTable extends React.Component {
                 title: 'New Course'
             },
             courses: courseService.findAllCourses()}
+        this.titleChanged = this.titleChanged.bind(this);
     }
     createCourse = () => {
         // this.state.module.push()
@@ -32,8 +33,8 @@ export default class CourseTable extends React.Component {
         console.log(event.target.value)
         this.setState({
             course:{
-                title: event.target.value,
-                id: (new Date()).getTime()
+                id: (new Date()).getTime(),
+                title: event.target.value
             }
         })
             }
