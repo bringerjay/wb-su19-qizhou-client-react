@@ -11,7 +11,7 @@ export default class WidgetService {
 
     createWidget = widget =>
 
-        fetch("http://localhost:8080/api/widgets",
+        fetch("https://webdev1-qizhou.herokuapp.com/api/widgets",
             {
                 method: 'POST',
                 body: JSON.stringify(widget),
@@ -25,23 +25,23 @@ export default class WidgetService {
 
 
     findAllWidgets = () =>
-        fetch("http://localhost:8080/api/widgets")
+        fetch("https://webdev1-qizhou.herokuapp.com/api/widgets")
             .then(function (response) {
                 return response.json()
             })
     findWidget = widgetId =>
-        fetch(`http://localhost:8080/api/widgets/${widgetId}`)
+        fetch(`https://webdev1-qizhou.herokuapp.com/api/widgets/${widgetId}`)
             .then(function (response) {
                 return response.json()
             })
     deleteWidget = widgetId =>
-        fetch(`http://localhost:8080/api/widgets/${widgetId}`,
+        fetch(`https://webdev1-qizhou.herokuapp.com/api/widgets/${widgetId}`,
             {method: 'DELETE'})
             .then(function (response) {
                 return response.json()
             })
     updateWidget = newwidget =>
-        fetch(`http://localhost:8080/api/widgets/${newwidget.id}`,
+        fetch(`https://webdev1-qizhou.herokuapp.com/api/widgets/${newwidget.id}`,
             {
                 method: 'PUT',
                 body: JSON.stringify(newwidget),
@@ -53,7 +53,7 @@ export default class WidgetService {
                 return response.json()
             })
     saveChanges = preview =>
-        fetch(`http://localhost:8080/api/widgets`,
+        fetch(`https://webdev1-qizhou.herokuapp.com/api/widgets`,
             {
                 method: 'PUT',
                 body: JSON.stringify(preview),
