@@ -1,89 +1,115 @@
 import React from 'react'
-import WidgetListItem from "./WidgetListItem";
 import {faPlusCircle, faToggleOn} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faToggleOff} from "@fortawesome/free-solid-svg-icons/faToggleOff";
+import WidgetListItem from "./WidgetListItem";
 export default class WidgetList extends React.Component{
     constructor(props){
         super(props)
-        let lw = 50
         this.props.findAllWidgets()
-        console.log(lw)
-        let previewinit = new Array()
-        for (var i=0; i< lw; i++ )
-        {
-            previewinit.push({
-                name: "33init33",
-                text: "33init33",
-                size: "33init33",
-                url:  "33init33",
-                list: "33init33",
-                type: "33init33"
-            })
-        }
-        console.log(previewinit)
+        this.props.initComponent()
         this.state = {
             view: "preview",
             editing: false,
-            preview: previewinit
         }
-        console.log(this.state.preview)
     }
-
-
-    textSaved = (newText,index) => {
-        let tracker = this.state.preview
+    textSaved = (newText,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
         tracker[index].text = newText
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
-    nameSaved = (newName,index) => {
-        let tracker = this.state.preview
+    ltextSaved = (newText,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
+        tracker[index].ltext = newText
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
+    }
+    nameSaved = (newName,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
+        console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
         tracker[index].name = newName
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
-    sizeSaved = (newSize,index) => {
-        let tracker = this.state.preview
+    sizeSaved = (newSize,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
         tracker[index].size = newSize
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
-    urlSaved = (newurl,index) => {
-        let tracker = this.state.preview
+    urlSaved = (newUrl,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
-        tracker[index].url = newurl
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
+        tracker[index].url = newUrl
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
-    typeSaved = (newType,index) => {
-        let tracker = this.state.preview
+    typeSaved = (newType,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
         tracker[index].type = newType
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
-    listSaved = (newList,index) => {
-        let tracker = this.state.preview
+    listSaved = (newList,widgetId) => {
+        console.log("widget state")
+        console.log(this.props.widgets)
+        console.log("previews state")
+        console.log(this.props.previews)
+        let tracker = this.props.previews
         console.log(tracker)
+        const preview = this.props.previews.
+        find(preview => preview.id === parseInt(widgetId))
+        const index = this.props.previews.indexOf(preview)
         tracker[index].list = newList
-        this.setState({
-            preview: tracker
-        })
-        console.log(tracker)
+        this.props.updatePreviews(tracker)
+        console.log("updating" + tracker)
     }
     toggleEdition = () => {
         if (this.state.view === "editing")
@@ -94,7 +120,8 @@ export default class WidgetList extends React.Component{
         this.setState({ editing: !this.state.editing })
     }
     saveEdition = () => {
-        this.props.saveChanges(this.state.preview)
+        this.props.updateWidgets(this.props.previews)
+            .then(this.props.initComponent)
     }
     render(){
         return(
@@ -134,6 +161,7 @@ export default class WidgetList extends React.Component{
                             urlSaved={this.urlSaved}
                             typeSaved={this.typeSaved}
                             listSaved={this.listSaved}
+                            ltextSaved={this.ltextSaved}
                             view={this.state.view}/>
                         )
                     }

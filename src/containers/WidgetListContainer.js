@@ -2,10 +2,9 @@ import WidgetList from '../components/WidgetList'
 import {connect} from 'react-redux'
 import service from '../services/WidgetService'
 const widgetService = service.getInstance();
-
 const stateToPropertyMapper = state => ({
     widgets: state.widgets,
-    length: state.widgets.length
+    previews: state.previews
 })
 
 const propertyToDispatchMapper = dispatch => ({
@@ -14,11 +13,12 @@ const propertyToDispatchMapper = dispatch => ({
         .createWidget({
             id: 1,
             name: 'New Widget',
-            type: 'HEADING',
+            type: 'Heading',
             size: 'h1',
             text: 'hello world',
             list: 'ul',
-            url:  'www.amazon.com'
+            url:  'www.amazon.com',
+            ltext: ["Hello","World"]
             }).then(widgets =>
         dispatch({
             type: 'CREATE_WIDGET',
@@ -34,20 +34,12 @@ const propertyToDispatchMapper = dispatch => ({
         dispatch({type: 'MOVE_DOWN_WIDGET',
         index: index})
         ,
-    updateWidget: (newWidget) =>
-        widgetService
-            .updateWidget(newWidget).then(widgets =>
-            dispatch({
-                type: 'UPDATE_WIDGET',
-                widgets: widgets
-            })
-        )
-    ,
-        saveChanges: (preview) =>
+
+    updateWidgets: (preview) =>
             widgetService
             .saveChanges(preview).then(widgets =>
                 dispatch({
-                    type: 'SAVE_CHANGES',
+                    type: 'UPDATE_WIDGETS',
                     widgets: widgets
                 })
             )
@@ -63,7 +55,17 @@ const propertyToDispatchMapper = dispatch => ({
             .findAllWidgets()
             .then(widgets =>
         dispatch({type: 'FIND_ALL_WIDGETS',
-        widgets: widgets}))
+        widgets: widgets})),
+    initComponent: () =>
+        widgetService
+            .findAllWidgets()
+            .then(widgets =>
+                dispatch({type: 'INIT_COMPONENT',
+                    widgets: widgets})),
+    updatePreviews: (newPreviews) =>
+    dispatch({type: 'UPDATE_PREVIEWS',
+    previews: newPreviews})
+    ,
 })
 
 const WidgetListContainer = connect(

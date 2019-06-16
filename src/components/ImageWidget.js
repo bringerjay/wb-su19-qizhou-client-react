@@ -1,12 +1,14 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-export default class LinkWidget extends React.Component {
+import Textarea from "react-textarea-autosize";
+export default class ImageWidget extends React.Component {
     constructor(props) {
         super(props)
     }
+
     render() {
-        return(
+        return (
             <div>
                 {this.props.view === "preview" && <div>
                     <h1>{this.props.widget.type} widget ID {this.props.widget.id}</h1>
@@ -35,16 +37,11 @@ export default class LinkWidget extends React.Component {
                                              this.props.deleteWidget(this.props.widget.id)}/>
 					</span><br/>
                     <div>
-                        <label htmlFor="heading-text">
-                            <h3>{this.props.widget.type} Text Input</h3></label>
-                        <input id="heading-text" className="form-control"
-                               placeholder={this.props.widget.text}
-                               onChange={this.props.textChanged}/></div>
-                    <br/>
-                    <div>
                         <label htmlFor="heading-text">URL</label>
-                        <input id="heading-text" className="form-control" placeholder={this.props.widget.url}
-                               onChange={this.urlChanged}/></div>
+                        <input id="heading-text" className="form-control"
+                               placeholder={this.props.widget.url}
+                               onChange={this.props.urlChanged}/></div>
+                    <br/>
                     <label htmlFor="widget-name"><h3>Widget Name</h3></label>
                     <br/>
                     <input id="widget-name" className="form-control"
@@ -53,7 +50,8 @@ export default class LinkWidget extends React.Component {
                 </div>
                 }
                 <h2>Preview</h2>
-                <a href={this.props.preview.url}>{this.props.preview.text}</a>
+                <img className="card-img-top"
+                     src={this.props.preview.url}/>
             </div>
         )
     }
