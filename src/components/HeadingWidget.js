@@ -26,6 +26,7 @@ export default class HeadingWidget extends React.Component {
                         <option value="Paragraph">Paragraph</option>
                         <option value="Image">Image</option>
                         <option value="List">List</option>
+                            <option value="Link">Link</option>
                         </select>
                         <FontAwesomeIcon icon={faTrashAlt} type="button"
                                          className="icons fa-2x"
