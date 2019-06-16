@@ -65,7 +65,7 @@ export default class WidgetListItem extends React.Component{
     }
     listChanged = (event) => {
         let tracker = this.state.preview
-        tracker.url = event.target.value
+        tracker.list = event.target.value
         this.setState({
             preview: tracker
         })
@@ -94,6 +94,7 @@ export default class WidgetListItem extends React.Component{
                         updateWidget={this.props.updateWidget}
                         moveUp={this.props.moveUp}
                         moveDown={this.props.moveDown}
+                        nameChanged={this.nameChanged}
                         textChanged={this.textChanged}
                         sizeChanged={this.sizeChanged}
                         typeChanged={this.typeChanged}
@@ -109,6 +110,7 @@ export default class WidgetListItem extends React.Component{
                         updateWidget={this.props.updateWidget}
                         moveUp={this.props.moveUp}
                         moveDown={this.props.moveDown}
+                        nameChanged={this.nameChanged}
                         textChanged={this.textChanged}
                         typeChanged={this.typeChanged}
                         preview={this.state.preview}
@@ -123,6 +125,7 @@ export default class WidgetListItem extends React.Component{
                         updateWidget={this.props.updateWidget}
                         moveUp={this.props.moveUp}
                         moveDown={this.props.moveDown}
+                        nameChanged={this.nameChanged}
                         textareaChanged={this.textareaChanged}
                         typeChanged={this.typeChanged}
                         listChanged={this.listChanged}
@@ -134,10 +137,12 @@ export default class WidgetListItem extends React.Component{
                         view={this.props.view}
                         widget={this.props.widget}
                         index={this.props.index}
+                        nameChanged={this.nameChanged}
                         deleteWidget={this.props.deleteWidget}
                         updateWidget={this.props.updateWidget}
                         moveUp={this.props.moveUp}
                         moveDown={this.props.moveDown}
+                        nameChanged={this.nameChanged}
                         textChanged={this.textChanged}
                         urlChanged={this.urlChanged}
                         preview={this.state.preview}
@@ -153,6 +158,7 @@ export default class WidgetListItem extends React.Component{
                         updateWidget={this.props.updateWidget}
                         moveUp={this.props.moveUp}
                         moveDown={this.props.moveDown}
+                        nameChanged={this.nameChanged}
                         textChanged={this.textChanged}
                         urlChanged={this.urlChanged}
                         preview={this.state.preview}

@@ -29,10 +29,11 @@ export default class WidgetService {
             .then(function (response) {
                 return response.json()
             })
-
-    //findWidgetById = widgetId => {
-    //return widgets.find(widget => widget.id == widgetId)
-    //}
+    findWidget = widgetId =>
+        fetch(`http://localhost:8080/api/widgets/${widgetId}`)
+            .then(function (response) {
+                return response.json()
+            })
     deleteWidget = widgetId =>
         fetch(`http://localhost:8080/api/widgets/${widgetId}`,
             {method: 'DELETE'})

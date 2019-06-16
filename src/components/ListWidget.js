@@ -21,7 +21,7 @@ export default class ListWidget extends React.Component {
                             icon={faArrowAltCircleDown} type="button"
                             id="go-down" className="fa-2x position" aria-hidden="true"
                             onClick={() => this.props.moveDown(this.props.index)}/>}
-                        <select selected={this.props.widget.type}
+                        <select defaultValue={this.props.widget.type}
                                 onChange={this.props.typeChanged}>
                         <option value="Heading">Heading</option>
                         <option value="Paragraph">Paragraph</option>
@@ -39,10 +39,13 @@ export default class ListWidget extends React.Component {
                         <Textarea rows='2' id="paragrah-text"
                                   className="form-control
                                  paragrah-text"
-                                  placeholder={this.props.widget.ltext}
+                                  placeholder={JSON.stringify(this.props.widget.ltext)
+                                      .replace('["', '')
+                                      .replace('"]', '')
+                                      .replace(/","/g, '\n')}
                                   onChange={this.props.textareaChanged}/></div>
                     <br/>
-                    <select selected={this.props.widget.list}
+                    <select defaultValue={this.props.widget.list}
                             onChange={this.props.listChanged}>
                         <option value="ul">Unordered list</option>
                         <option value="ol">Ordered list</option>
@@ -56,8 +59,14 @@ export default class ListWidget extends React.Component {
                 </div>
                 }
                 <h2>Preview</h2>
+                <h4>Name: {this.props.preview.name}</h4>
                 <this.props.preview.list>
-                    Text: {this.props.preview.ltext}
+               {this.props.preview.ltext.map(text => {
+                   return (
+                       <li>
+                           {text}
+                       </li>
+                   )})}
                 </this.props.preview.list>
             </div>
         )

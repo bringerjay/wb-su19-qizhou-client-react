@@ -20,7 +20,7 @@ export default class HeadingWidget extends React.Component {
                             icon={faArrowAltCircleDown} type="button"
                             id="go-down" className="fa-2x position" aria-hidden="true"
                             onClick={() => this.props.moveDown(this.props.index)}/>}
-                        <select selected={this.props.widget.type}
+                        <select defaultValue={this.props.widget.type}
                                 onChange={this.props.typeChanged}>
                         <option value="Heading">Heading</option>
                         <option value="Paragraph">Paragraph</option>
@@ -40,7 +40,7 @@ export default class HeadingWidget extends React.Component {
                            onChange={this.props.textChanged}/></div>
                 <br/>
                 <select className="form-control col-3"
-                        value={this.props.widget.size}
+                        defaultValue={this.props.widget.size}
                         onChange={this.props.sizeChanged}>
                     <option value="h1">heading 1</option>
                     <option value="h2">heading 2</option>
@@ -54,6 +54,7 @@ export default class HeadingWidget extends React.Component {
                 </div>
                 }
                 <h2>Preview</h2>
+                <h4>Name: {this.props.preview.name}</h4>
                 <this.props.preview.size>Text: {this.props.preview.text}
                 </this.props.preview.size>
             </div>

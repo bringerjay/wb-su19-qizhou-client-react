@@ -66,6 +66,13 @@ const propertyToDispatchMapper = dispatch => ({
     dispatch({type: 'UPDATE_PREVIEWS',
     previews: newPreviews})
     ,
+    findWidget: (widgetId) =>
+        widgetService.findWidget(widgetId)
+            .then(widget =>
+                dispatch({type: 'FIND_WIDGET',
+                    widget: widget})
+        )
+    ,
 })
 
 const WidgetListContainer = connect(

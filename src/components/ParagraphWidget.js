@@ -21,7 +21,7 @@ export default class ParagraphWidget extends React.Component {
                             icon={faArrowAltCircleDown} type="button"
                             id="go-down" className="fa-2x position" aria-hidden="true"
                             onClick={() => this.props.moveDown(this.props.index)}/>}
-                        <select selected={this.props.widget.type}
+                        <select defaultValue={this.props.widget.type}
                                 onChange={this.props.typeChanged}>
                         <option value="Heading">Heading</option>
                         <option value="Paragraph">Paragraph</option>
@@ -50,6 +50,7 @@ export default class ParagraphWidget extends React.Component {
                 </div>
                 }
                 <h2>Preview</h2>
+                <h4>Name: {this.props.preview.name}</h4>
                 <p>Text: {this.props.preview.text}
                 </p>
             </div>
