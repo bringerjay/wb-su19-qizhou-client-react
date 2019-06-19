@@ -20,7 +20,7 @@ export default class CourseRow extends React.Component{
                 <span className="course-actions float-right">
                     <FontAwesomeIcon icon={faPencilAlt} type="button"
                                      className="icons update-icon fa-2x"
-                                     onClick={() => this.props.updateCourse(this.props.course.id,this.props.newcourse.title)}/>
+                                     onClick={() => this.props.updateCourse(this.props.course.id,this.props.newcourse)}/>
                 <FontAwesomeIcon icon={faTrashAlt} type="button"
                                  className="icons fa-2x"
                                  onClick={() => this.props.deleteCourse(this.props.course.id)}/>

@@ -1,27 +1,26 @@
-import service from '../services/CourseService'
-const courseService = service.getInstance();
-const courseReducer = (state = {courses: []}, action) => {
+const courseReducer = (state = {courses: [], course: []}, action) => {
     switch (action.type) {
         case "CREATE_COURSE":
-            return {
-                courses: action.courses
-            };
-            case "FIND_ALL_COURSES":
-            return {
-                courses: action.courses
-                //courses: courseService.findAllCourses()
-                };
+            return Object.assign({}, state, {
+                courses: action.courses,
+                course: action.course
+            })
+        case "FIND_ALL_COURSES":
+                return Object.assign({}, state, {
+                    courses: action.courses
+                })
         case "DELETE_COURSE":
-            return {
-                courses: courseService.deleteCourseById(action.courseId)  };
+            return Object.assign({}, state, {
+                courses: action.courses
+            })
         case "UPDATE_COURSE":
-
-            return {
-                courses: courseService.updateCourse(action.course)};
+            return Object.assign({}, state, {
+                courses: action.courses
+            })
         case "FIND_COURSE":
-
-            return {
-                courses: courseService.findCourseById(action.courseId)};
+            return Object.assign({}, state, {
+                course: action.course
+            })
         default:
             return state;
     }

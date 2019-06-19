@@ -2,11 +2,13 @@ import React from 'react'
 import ModuleList from "./ModuleList";
 import LessonTabs from "./LessonTabs";
 import TopicPills from "./TopicPills";
+import tcourses from "./courses"
 import {BrowserRouter as Router, Link, Route, withRouter} from 'react-router-dom'
 import WidgetListContainer from "../containers/WidgetListContainer"
 import service from "../services/CourseService";
 import '../styles/CourseEditor.css'
 const courseService = service.getInstance();
+const tempCourses = tcourses
 export default class CourseEditor
     extends React.Component {
     constructor(props) {
@@ -14,21 +16,49 @@ export default class CourseEditor
         const pathname = window.location.pathname
         const paths = pathname.split('/')
         const courseId = paths[2]
-        //const moduleId = paths[3]
-        //const lessonTitle = paths[4]
-        const currentCourses = courseService.findAllCourses()
-        const currentCourse = courseService.findCourseById(courseId)
-        console.log(courseId, currentCourses,currentCourse)
-        let currentModules =[]
-        let currentLessons =[]
-        let currentTopics =[]
-        let selectedLesson= []
-        let selectedModule= []
-        let selectedTopic = []
-        if (currentCourse.modules.length>0)
+        let currentLessons = tempCourses[0].modules[0].lessons
+        let currentTopics =tempCourses[0].modules[0].lessons[0].topics
+        let selectedLesson= tempCourses[0].modules[0].lessons[0]
+        let selectedTopic = tempCourses[0].modules[0].lessons[0].topics[0]
+        let currentCourses = []
+        let currentCourse = []
+        let currentModules = []
+        let selectedModule = []
+        this.state = {
+            courses: [],
+            courseId: [],
+            course: [],
+            modules: [],
+            lessons: [],
+            topics: [],
+            selectedLesson: [],
+            selectedModule: [],
+            selectedTopic: []
+        }
+        courseService.findAllCourses()
+            .then(courses => currentCourses = courses)
+        courseService.findCourseById(courseId)
+            .then(course => currentCourse = course)
+            .then(() => {
+                currentModules = currentCourse.modules
+                selectedModule = currentModules[0]
+            }).then(()=>{
+            this.setState({
+                courses: currentCourses,
+                courseId: courseId,
+                course: currentCourse,
+                modules: currentModules,
+                lessons: currentLessons,
+                topics: currentTopics,
+                selectedLesson: selectedLesson,
+                selectedModule: selectedModule,
+                selectedTopic: selectedTopic
+            })
+        })
+        /**if (currentCourse.modules.length>0)
         {currentModules = currentCourse.modules
                 selectedModule= currentModules[0]
-            if (selectedModule.lessons.length>0) {
+           if (selectedModule.lessons.length>0) {
                 currentLessons = selectedModule.lessons
                 selectedLesson=currentLessons[0]
             if (selectedLesson.topics.length>0) {
@@ -36,24 +66,13 @@ export default class CourseEditor
                 selectedTopic= currentTopics[0]
             }
             }
-        }
-        this.state = {
-            courses: currentCourses,
-            courseId: courseId,
-            course: currentCourse,
-            modules: currentModules,
-            lessons: currentLessons,
-            topics: currentTopics,
-            selectedLesson: selectedLesson,
-            selectedModule: selectedModule,
-            selectedTopic: selectedTopic
-        }
-        console.log(this.state.modules,this.state.selectedModule)
-        console.log(this.state.lessons,
-            this.state.selectedLesson,this.state.selectedModule
-        , this.state.selectedTopic)
-        console.log(typeof (this.state.lessons === 'undefined'
-            || this.state.lessons.length < 1))
+        }**/
+        //console.log(this.state.modules,this.state.selectedModule)
+        //console.log(this.state.lessons,
+         //   this.state.selectedLesson,this.state.selectedModule
+        //, this.state.selectedTopic)
+        //console.log(typeof (this.state.lessons === 'undefined'
+       //     || this.state.lessons.length < 1))
     }
     selectModule = (module) => {
         console.log(module)

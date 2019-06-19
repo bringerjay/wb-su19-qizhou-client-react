@@ -1,6 +1,3 @@
-import jcourses from '../components/courses.json'
-let courses = jcourses
-let id = 6
 export default class CourseService {
     static myInstance = null;
 
@@ -11,35 +8,48 @@ export default class CourseService {
         }
         return this.myInstance;
     }
+    createCourse = Course =>
 
-    createCourse = course => {
-        console.log(courses)
-        course.id = id
-        id ++
-        courses.push(course)
-        console.log(courses )
-        return course
-    }
+        fetch("http://localhost:8080/api/courses",
+            {
+                method: 'POST',
+                body: JSON.stringify(Course),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            .then(function (response) {
+                return response.json()
+            })
+
     findAllCourses = () =>
-        courses
+        fetch("http://localhost:8080/api/courses")
+            .then(function (response) {
+                return response.json()
+            })
 
-    deleteCourseById = courseId =>{
-        console.log(courseId)
-        courses= courses.filter(course => course.id !== courseId)
-        return courses
-    }
-    findCourseById = courseId =>{
-        const course = courses.find(course => course.id === parseInt(courseId))
-        return course
-    }
-    updateCourse = (id,newtitle) => {
-        courses = courses.map(course=>
-        {
-            if (course.id !== id)
-                return course;
-            else
-            { course.title = newtitle;
-                return course;}})
-        return courses
-    }
+    deleteCourseById = courseId =>
+        fetch(`http://localhost:8080/api/courses/${courseId}`,
+            {method: 'DELETE'})
+            .then(function (response) {
+                return response.json()
+            })
+
+    findCourseById = courseId =>
+        fetch(`http://localhost:8080/api/courses/${courseId}`)
+            .then(function (response) {
+                return response.json()
+            })
+
+    updateCourse = (id,newcourse) =>
+        fetch(`http://localhost:8080/api/courses/${id}`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(newcourse),
+                headers: {
+                    'content-type': 'application/json'
+                }
+            }).then(function (response) {
+            return response.json()
+        })
 }

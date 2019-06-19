@@ -2,48 +2,44 @@ import React from 'react';
 import 'jquery/dist/jquery.min.js';
 import "bootstrap/js/src/collapse.js";
 import 'bootstrap/dist/css/bootstrap.min.css'
-import {BrowserRouter as Router, Link, withRouter} from "react-router-dom";
 import service from "../services/CourseService";
 import CourseGrid from "./CourseGrid";
 import CourseList from "./CourseList";
 import '../styles/CourseTable.css'
 import {faPlusCircle, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-const courseService = service.getInstance();
 export default class CourseTable extends React.Component {
     constructor(props) {
         super(props)
+        this.props.findAllCourses()
         this.state = {
             list: true,
             style: "list view",
             course: {
                 id: -1,
                 title: 'New Course'
-            },
-            courses: courseService.findAllCourses()}
+            }
+        }
         this.titleChanged = this.titleChanged.bind(this);
     }
-    createCourse = () => {
-        // this.state.module.push()
-        console.log('creating a course' + this.state.course.title )
-        this.state.course.id = (new Date()).getTime()
-        this.setState({courses: [...this.state.courses,courseService.createCourse(this.state.course)]
-        })}
+    createCourse = () =>
+    {
+        console.log("Creating course " + this.state.course.title)
+        this.props.createCourse(this.state.course)
+    }
+
     titleChanged = (event) => {
         console.log(event.target.value)
         this.setState({
             course:{
-                id: (new Date()).getTime(),
                 title: event.target.value
             }
         })
             }
+
     deleteCourse = (id) => {
         console.log('deleteCourse ' + id)
-        this.setState({
-            courses: courseService.deleteCourseById(id)
-        })
-        console.log(courseService.findAllCourses())
+        this.props.deleteCourse(id)
     }
     onToggle = () => {
         if (this.state.style === "grid view")
@@ -53,10 +49,9 @@ export default class CourseTable extends React.Component {
         }
         this.setState({ list: !this.state.list })
     }
-    updateCourse = (id,newtitle) =>{
-        this.setState({
-            courses: courseService.updateCourse(id,newtitle)
-        })
+    updateCourse = (id,newcourse) =>{
+        console.log('Update Course ' + id + newcourse)
+        this.props.updateCourse(id,newcourse)
     }
     render() {
         return (
@@ -78,7 +73,7 @@ export default class CourseTable extends React.Component {
                         <FontAwesomeIcon icon={faPlusCircle} type="button"
                                          className="add fa-2x"
                                          onClick = {() => {
-                                             console.log(this.state.courses)
+                                             console.log(this.props.courses)
                                              this.createCourse()}}/>
                     </form>
                 </nav>
@@ -108,13 +103,13 @@ export default class CourseTable extends React.Component {
                 </div>
                 <div className="container-fluid">
                 {this.state.list && <CourseList
-                    courses={this.state.courses}
+                    courses={this.props.courses}
                     newcourse={this.state.course}
                     deleteCourse={this.deleteCourse}
                     updateCourse={this.updateCourse}
                 />}
                 {!this.state.list && <CourseGrid
-                    courses={this.state.courses}
+                    courses={this.props.courses}
                     newcourse={this.state.course}
                     deleteCourse={this.deleteCourse}
                     updateCourse={this.updateCourse}

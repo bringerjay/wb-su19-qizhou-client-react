@@ -2,26 +2,21 @@ import React from "react";
 import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom'
 import Provider from "react-redux/es/components/Provider";
 import {createStore} from 'redux'
-import service from '../services/CourseService'
-import CourseTable from "./CourseTable";
 import CourseEditor from "./CourseEditor";
-import widgetReducer from "../reducers/widgetReducer";
-const store = createStore(widgetReducer)
-
+import rootReducer from "../reducers/rootReducer";
+import CourseTableContainer from "../containers/CourseTableContainer";
+const store = createStore(rootReducer)
+console.log(store.getState())
 export default class HomePage extends React.Component{
     constructor(props) {
         super(props)
-        this.courseService = service.getInstance()
-        this.state = {
-            courses: this.courseService.findAllCourses()
-        }
     }
     render(){
         return(
             <Provider store={store}>
                 <Router>
                   <Route exact path={"/"}
-                           component={withRouter(CourseTable)}/>
+                           component={withRouter(CourseTableContainer)}/>
                     <Route path={"/course-editor/:courseId"}
                            component={withRouter(CourseEditor)}/>
                 </Router>

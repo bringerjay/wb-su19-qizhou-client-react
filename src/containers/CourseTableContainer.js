@@ -3,27 +3,46 @@ import CourseTable from '../components/CourseTable'
 import service from "../services/CourseService";
 const courseService = service.getInstance();
 const stateToPropertyMapper = state => ({
-    courses: state.courses
-    //course: state.course
+    courses: state.courseReducer.courses,
+    course: state.courseReducer.course
 })
 
 const dispatchToPropertyMapper = dispatch => ({
     findAllCourses: () =>
-    {
-        let courses1=courseService.findAllCourses()
-        dispatch({type: 'FIND_ALL_COURSES',
-            courses: courses1})
-    }
-        ,
-    deleteCourse: (courseId) => dispatch({type: 'DELETE_COURSE', courseId: courseId}),
+        courseService.findAllCourses()
+            .then(courses => dispatch({
+                type: 'FIND_ALL_COURSES',
+                courses: courses
+            }))
+    ,
+    deleteCourse: (courseId) =>
+        courseService.deleteCourseById(courseId)
+            .then(courses => dispatch({
+                type: 'DELETE_COURSE',
+                courses: courses
+            }))
+    ,
     createCourse: (course) =>
-    {   let courses2=courseService.createCourse(course)
-        dispatch({type: 'CREATE_COURSE', courses: courses2})}
-        ,
-    updateCourse: (course) => dispatch({type: 'UPDATE_COURSE', course: course}),
-    findCourseById: (courseId) =>courses => dispatch({type: 'FIND_COURSE', courseId: courseId})
+        courseService.createCourse(course)
+            .then(courses => dispatch({
+                type: 'CREATE_COURSE',
+                courses: courses
+            }))
+    ,
+    updateCourse: (id,newcourse) =>
+        courseService.updateCourse(id,newcourse)
+            .then(courses => dispatch({
+                type: 'UPDATE_COURSE',
+                courses: courses
+            }))
+    ,
+    findCourseById: (courseId) =>
+        courseService.findCourseById(courseId)
+            .then(course => dispatch({
+                type: 'FIND_COURSE',
+                course: course
+            }))
 })
-
 const CourseTableContainer = connect(
     stateToPropertyMapper,dispatchToPropertyMapper
 )(CourseTable)

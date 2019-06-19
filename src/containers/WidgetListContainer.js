@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import service from '../services/WidgetService'
 const widgetService = service.getInstance();
 const stateToPropertyMapper = state => ({
-    widgets: state.widgets,
-    previews: state.previews
+    widgets: state.widgetReducer.widgets,
+    previews: state.widgetReducer.previews
 })
 
 const propertyToDispatchMapper = dispatch => ({
