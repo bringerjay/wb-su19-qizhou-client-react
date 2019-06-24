@@ -6,8 +6,9 @@ import WidgetListItem from "./WidgetListItem";
 export default class WidgetList extends React.Component{
     constructor(props){
         super(props)
-        this.props.findAllWidgets()
-        this.props.initComponent()
+        console.log(this.props.tId)
+        this.props.findAllWidgets(this.props.tId)
+        this.props.initComponent(this.props.tId)
         this.state = {
             view: "preview",
             editing: false,
@@ -120,8 +121,9 @@ export default class WidgetList extends React.Component{
         this.setState({ editing: !this.state.editing })
     }
     saveEdition = () => {
-        this.props.updateWidgets(this.props.previews)
-            .then(this.props.initComponent)
+        this.props.updateWidgets(this.props.tId,
+            this.props.previews)
+            .then(this.props.initComponent(this.props.tId))
     }
     render(){
         return(
@@ -142,7 +144,9 @@ export default class WidgetList extends React.Component{
                             {this.state.view}</FontAwesomeIcon>}
                 <FontAwesomeIcon icon={faPlusCircle} type="button"
                                  className="add fa-2x"
-                                 onClick={()=> {this.props.createWidget()}}/>
+                                 onClick={()=> {this.props.createWidget(
+                                     this.props.tId
+                                 )}}/>
                 </span>
                 <br/><br/><br/>
                 <div className="row">
@@ -162,7 +166,9 @@ export default class WidgetList extends React.Component{
                             typeSaved={this.typeSaved}
                             listSaved={this.listSaved}
                             ltextSaved={this.ltextSaved}
-                            view={this.state.view}/>
+                            view={this.state.view}
+                            tId={this.props.tId}
+                            />
                         )
                     }
             </div>

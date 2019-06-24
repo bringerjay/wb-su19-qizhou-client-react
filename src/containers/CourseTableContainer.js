@@ -17,6 +17,7 @@ const dispatchToPropertyMapper = dispatch => ({
     ,
     deleteCourse: (courseId) =>
         courseService.deleteCourseById(courseId)
+            .then(courseService.findAllCourses)
             .then(courses => dispatch({
                 type: 'DELETE_COURSE',
                 courses: courses
@@ -24,6 +25,7 @@ const dispatchToPropertyMapper = dispatch => ({
     ,
     createCourse: (course) =>
         courseService.createCourse(course)
+            .then(courseService.findAllCourses)
             .then(courses => dispatch({
                 type: 'CREATE_COURSE',
                 courses: courses
@@ -31,6 +33,7 @@ const dispatchToPropertyMapper = dispatch => ({
     ,
     updateCourse: (id,newcourse) =>
         courseService.updateCourse(id,newcourse)
+            .then(courseService.findAllCourses)
             .then(courses => dispatch({
                 type: 'UPDATE_COURSE',
                 courses: courses

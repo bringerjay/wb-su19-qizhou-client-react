@@ -2,24 +2,25 @@ import React from 'react'
 import ModuleList from "./ModuleList";
 import LessonTabs from "./LessonTabs";
 import TopicPills from "./TopicPills";
-import tcourses from "./courses"
 import {BrowserRouter as Router, Link, Route, withRouter} from 'react-router-dom'
 import WidgetListContainer from "../containers/WidgetListContainer"
-import service from "../services/CourseService";
+import cService from "../services/CourseService";
 import '../styles/CourseEditor.css'
-const courseService = service.getInstance();
-const tempCourses = tcourses
+const courseService = cService.getInstance()
 export default class CourseEditor
     extends React.Component {
     constructor(props) {
         super(props)
         const pathname = window.location.pathname
         const paths = pathname.split('/')
-        const courseId = paths[2]
-        let currentLessons = tempCourses[0].modules[0].lessons
-        let currentTopics =tempCourses[0].modules[0].lessons[0].topics
-        let selectedLesson= tempCourses[0].modules[0].lessons[0]
-        let selectedTopic = tempCourses[0].modules[0].lessons[0].topics[0]
+        let courseId = paths[2]
+        let currentLessons = [{id:1,title: "HTML"}
+        ,{id:2,title: "BootStrap"},
+            {id:3,title: "Redux"}]
+        let currentTopics =[{id:1,title: "Reducer"}
+        ,{id:2,title: "Container"}]
+        let selectedLesson= {id:1,title: "HTML"}
+        let selectedTopic = {id:1,title: "Header"}
         let currentCourses = []
         let currentCourse = []
         let currentModules = []
@@ -55,24 +56,6 @@ export default class CourseEditor
                 selectedTopic: selectedTopic
             })
         })
-        /**if (currentCourse.modules.length>0)
-        {currentModules = currentCourse.modules
-                selectedModule= currentModules[0]
-           if (selectedModule.lessons.length>0) {
-                currentLessons = selectedModule.lessons
-                selectedLesson=currentLessons[0]
-            if (selectedLesson.topics.length>0) {
-                currentTopics = selectedLesson.topics
-                selectedTopic= currentTopics[0]
-            }
-            }
-        }**/
-        //console.log(this.state.modules,this.state.selectedModule)
-        //console.log(this.state.lessons,
-         //   this.state.selectedLesson,this.state.selectedModule
-        //, this.state.selectedTopic)
-        //console.log(typeof (this.state.lessons === 'undefined'
-       //     || this.state.lessons.length < 1))
     }
     selectModule = (module) => {
         console.log(module)
@@ -149,8 +132,10 @@ export default class CourseEditor
                 </div>
                 <div className="row">
                     <div className="col-4 left">
-                        {this.state.modules.length > 0 && <ModuleList
+                        {this.state.modules.length > 0 &&
+                        <ModuleList
                             modules={this.state.modules}
+                            courseId={this.state.courseId}
                             selectModule={this.selectModule}
                         />}
                         {this.state.modules.length < 1 && "No Modules was recorded"}
@@ -170,7 +155,8 @@ export default class CourseEditor
                         {this.state.topics.length < 1 && "No Topics Were " +
                         "Recorded For The Selected Lesson"}
                         <br/>
-                        <WidgetListContainer/>
+                        <WidgetListContainer
+                        tId={1}/>
                     </div>
                 </div>
             </div>

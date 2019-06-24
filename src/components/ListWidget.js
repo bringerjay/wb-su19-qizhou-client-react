@@ -33,7 +33,8 @@ export default class ListWidget extends React.Component {
                         <FontAwesomeIcon icon={faTrashAlt} type="button"
                                          className="icons fa-2x"
                                          onClick={() =>
-                                             this.props.deleteWidget(this.props.widget.id)}/>
+                                             this.props.deleteWidget(this.props.widget.id
+                                             ,this.props.tId)}/>
 					</span><br/>
                     <div>
                         <label htmlFor="paragrah-text">

@@ -99,6 +99,7 @@ export default class WidgetListItem extends React.Component{
                         sizeChanged={this.sizeChanged}
                         typeChanged={this.typeChanged}
                         preview={this.state.preview}
+                        tId={this.props.tId}
                     />}
                     {this.props.widget.type === "Paragraph" &&
                     <ParagraphWidget
@@ -114,6 +115,7 @@ export default class WidgetListItem extends React.Component{
                         textChanged={this.textChanged}
                         typeChanged={this.typeChanged}
                         preview={this.state.preview}
+                        tId={this.props.tId}
                     />}
                     {this.props.widget.type === "List" &&
                     <ListWidget
@@ -130,6 +132,7 @@ export default class WidgetListItem extends React.Component{
                         typeChanged={this.typeChanged}
                         listChanged={this.listChanged}
                         preview={this.state.preview}
+                        tId={this.props.tId}
                     />}
                     {this.props.widget.type === "Image" &&
                     <ImageWidget
@@ -147,6 +150,7 @@ export default class WidgetListItem extends React.Component{
                         urlChanged={this.urlChanged}
                         preview={this.state.preview}
                         typeChanged={this.typeChanged}
+                        tId={this.props.tId}
                     />}
                     {this.props.widget.type === "Link" &&
                     <LinkWidget
@@ -163,6 +167,7 @@ export default class WidgetListItem extends React.Component{
                         urlChanged={this.urlChanged}
                         preview={this.state.preview}
                         typeChanged={this.typeChanged}
+                        tId={this.props.tId}
                     />}
                 </div>
             </div>)

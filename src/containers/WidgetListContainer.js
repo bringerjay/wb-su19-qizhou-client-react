@@ -2,24 +2,28 @@ import WidgetList from '../components/WidgetList'
 import {connect} from 'react-redux'
 import service from '../services/WidgetService'
 const widgetService = service.getInstance();
-const stateToPropertyMapper = state => ({
+const stateToPropertyMapper = (state,ownProps) => ({
+    tId: ownProps.tId,
     widgets: state.widgetReducer.widgets,
     previews: state.widgetReducer.previews
 })
 
 const propertyToDispatchMapper = dispatch => ({
-    createWidget: () =>
+    createWidget: (tId) =>
     widgetService
-        .createWidget({
-            id: 1,
+        .createWidgetForTopic(tId,{
             name: 'New Widget',
             type: 'Heading',
             size: 'h1',
             text: 'hello world',
             list: 'ul',
-            url:  'www.amazon.com',
+            url:  'https://www.amazon.com',
             ltext: ["Hello","World"]
-            }).then(widgets =>
+            })
+        .then(() =>
+            widgetService
+                .findAllWidgetsForTopic(tId))
+        .then(widgets =>
         dispatch({
             type: 'CREATE_WIDGET',
             widgets: widgets
@@ -35,32 +39,37 @@ const propertyToDispatchMapper = dispatch => ({
         index: index})
         ,
 
-    updateWidgets: (preview) =>
+    updateWidgets: (previews,tId) =>
             widgetService
-            .saveChanges(preview).then(widgets =>
+            .saveChanges(previews,tId)
+                .then(widgets =>
                 dispatch({
                     type: 'UPDATE_WIDGETS',
                     widgets: widgets
                 })
             )
         ,
-    deleteWidget: (widgetId) =>
+    deleteWidget: (widgetId,tId) =>
         widgetService.deleteWidget(widgetId)
+            .then(() =>
+                widgetService
+                    .findAllWidgetsForTopic(tId))
             .then(widgets =>
                 dispatch({type: 'DELETE_WIDGET',
                     widgets: widgets}))
     ,
-    findAllWidgets: () =>
+    findAllWidgets: (tId) =>
         widgetService
-            .findAllWidgets()
+            .findAllWidgetsForTopic(tId)
             .then(widgets =>
         dispatch({type: 'FIND_ALL_WIDGETS',
         widgets: widgets})),
-    initComponent: () =>
+    initComponent: (tId) =>
         widgetService
-            .findAllWidgets()
+            .findAllWidgetsForTopic(tId)
             .then(widgets =>
-                dispatch({type: 'INIT_COMPONENT',
+                dispatch(
+                    {type: 'INIT_COMPONENT',
                     widgets: widgets})),
     updatePreviews: (newPreviews) =>
     dispatch({type: 'UPDATE_PREVIEWS',

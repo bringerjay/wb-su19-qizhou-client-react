@@ -4,7 +4,6 @@ const widgetReducer = (state = {widgets: [],previews: []}, action) => {
             return Object.assign({}, state, {
                 widgets: action.widgets,
                previews: action.widgets
-
     })
         case "FIND_ALL_WIDGETS":
             return Object.assign({}, state, {

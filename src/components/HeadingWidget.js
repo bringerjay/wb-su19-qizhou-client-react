@@ -1,6 +1,7 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowAltCircleDown, faArrowAltCircleUp, faTrashAlt} from "@fortawesome/free-solid-svg-icons";
+import WidgetListItem from "./WidgetListItem";
 export default class HeadingWidget extends React.Component {
     constructor(props) {
         super(props)
@@ -31,7 +32,9 @@ export default class HeadingWidget extends React.Component {
                         <FontAwesomeIcon icon={faTrashAlt} type="button"
                                          className="icons fa-2x"
                                          onClick={() =>
-                                             this.props.deleteWidget(this.props.widget.id)}/>
+                                             this.props.deleteWidget(this.props.widget.id
+                                             ,this.props.tId
+                                             )}/>
 					</span><br/>
                     <div>
                     <label htmlFor="heading-text">

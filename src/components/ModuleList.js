@@ -1,5 +1,7 @@
 import React from 'react'
 import ModuleItem from './ModuleItem'
+import mService from "../services/ModuleService"
+const moduleService = mService.getInstance()
 export default class ModuleList
     extends React.Component {
     constructor(props) {
@@ -9,7 +11,6 @@ export default class ModuleList
         console.log(initHighlight)
         this.state = {
             module: {
-                id: -1,
                 title: 'New Module',
             },
             modules: this.props.modules,
@@ -17,40 +18,61 @@ export default class ModuleList
         }
     }
     createModule = () => {
-        // this.state.module.push()
-        this.state.module.id = (new Date()).getTime()
-        this.setState({
-            modules: [...this.state.modules,this.state.module]
-        })
+        moduleService.createModuleForCourse(this.props.courseId,
+            this.state.module)
+            .then(() =>
+                moduleService
+                    .findAllModulesForCourse(this.props.courseId))
+            .then((modules) =>
+                this.setState({
+                    modules: modules
+                })
+            )
+            .then(this.handleHighlight(this.state.modules.length))
     }
-    updateModule = (index) => {
-        console.log('updateModule ' + index)
+    updateModule = (index,id) => {
+        console.log('updateModule ' + index +
+        "with ID " + id)
         const ms = this.state.modules
         ms[index].title = this.state.module.title
-        this.setState({
-            modules: ms
-        })
-    }
+        moduleService
+            .findModuleById(id)
+            .then(module =>
+            module.title = this.state.module.title)
+            .then(module =>
+                moduleService.updateModule(id,module))
+            .then(() =>
+                moduleService
+                    .findAllModulesForCourse(this.props.courseId))
+            .then((modules) =>
+                this.setState({
+                    modules: modules
+                }))
+        }
 
     titleChanged = (event) => {
-        //console.log(event.target.value)
         console.log(event)
         this.setState({
             module: {
                 title: event.target.value,
-                id: (new Date()).getTime()
             }
         })
     }
 
     deleteModule = (id) => {
         console.log('deleteModule ' + id)
-        this.setState({
-            modules: this.state.modules.filter(module => module.mid !== id)
-        })
+        moduleService.deleteModuleById(id)
+            .then(() =>
+                moduleService
+                .findAllModulesForCourse(this.props.courseId))
+            .then((modules) =>
+                this.setState({
+                    modules: modules
+                })
+            )
     }
     handleHighlight = (index) => {
-        let highlightHelper = Array(this.props.modules.length).fill(" ")
+        let highlightHelper = Array(this.state.modules.length).fill(" ")
         highlightHelper[index]="active"
         this.setState({highlight: highlightHelper},
             () =>

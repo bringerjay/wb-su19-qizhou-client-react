@@ -20,12 +20,13 @@ export default class ModuleItem
         return(
             <li className={"list-group-item "+this.props.highlight[this.props.index]}
                 onClick={() => this.toggleHighlight()}>
-            {this.props.module.title+this.props.highlight[this.props.index]}
+            {this.props.module.title}
             <div className="float-right">
                 <FontAwesomeIcon icon={faEdit} type="button"
-                                 onClick={() => this.props.updateModule(this.props.index)}/>
+                                 onClick={() => this.props.updateModule(this.props.index,
+                                     this.props.module.id)}/>
                 <FontAwesomeIcon icon={faTrashAlt} type="button" className="icons"
-                   onClick={() => this.props.deleteModule(this.props.module.mid)}/>
+                   onClick={() => this.props.deleteModule(this.props.module.id)}/>
 
             </div>
         </li>)

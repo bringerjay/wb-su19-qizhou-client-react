@@ -9,12 +9,12 @@ export default class WidgetService {
         return this.myInstance;
     }
 
-    createWidget = widget =>
+    createWidgetForTopic = (tId,newWidget) =>
 
-        fetch("http://localhost:8080/api/widgets",
+        fetch(`http://localhost:8080/api/topics/${tId}/widgets`,
             {
                 method: 'POST',
-                body: JSON.stringify(widget),
+                body: JSON.stringify(newWidget),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -24,8 +24,8 @@ export default class WidgetService {
             })
 
 
-    findAllWidgets = () =>
-        fetch("http://localhost:8080/api/widgets")
+    findAllWidgetsForTopic = (tId) =>
+        fetch(`http://localhost:8080/api/topics/${tId}/widgets`)
             .then(function (response) {
                 return response.json()
             })
@@ -37,14 +37,11 @@ export default class WidgetService {
     deleteWidget = widgetId =>
         fetch(`http://localhost:8080/api/widgets/${widgetId}`,
             {method: 'DELETE'})
-            .then(function (response) {
-                return response.json()
-            })
-    updateWidget = newwidget =>
-        fetch(`http://localhost:8080/api/widgets/${newwidget.id}`,
+    updateWidget = newWidget =>
+        fetch(`http://localhost:8080/api/widgets/${newWidget.id}`,
             {
                 method: 'PUT',
-                body: JSON.stringify(newwidget),
+                body: JSON.stringify(newWidget),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -52,8 +49,8 @@ export default class WidgetService {
             .then(function (response) {
                 return response.json()
             })
-    saveChanges = preview =>
-        fetch(`http://localhost:8080/api/widgets`,
+    saveChanges = (tId,preview) =>
+        fetch(`http://localhost:8080/api/topics/${tId}/widgets`,
             {
                 method: 'PUT',
                 body: JSON.stringify(preview),

@@ -1,19 +1,19 @@
-export default class CourseService {
+export default class ModuleService {
     static myInstance = null;
 
     static getInstance() {
-        if (CourseService.myInstance == null) {
-            CourseService.myInstance =
-                new CourseService();
+        if (ModuleService.myInstance == null) {
+            ModuleService.myInstance =
+                new ModuleService();
         }
         return this.myInstance;
     }
-    createCourse = Course =>
+    createModuleForCourse = (cId,newModule) =>
 
-        fetch("http://localhost:8080/api/courses",
+        fetch(`http://localhost:8080/api/courses/${cId}/modules`,
             {
                 method: 'POST',
-                body: JSON.stringify(Course),
+                body: JSON.stringify(newModule),
                 headers: {
                     'content-type': 'application/json'
                 }
@@ -22,27 +22,27 @@ export default class CourseService {
                 return response.json()
             })
 
-    findAllCourses = () =>
-        fetch("http://localhost:8080/api/courses")
+    findAllModulesForCourse = cId =>
+        fetch(`http://localhost:8080/api/courses/${cId}/modules`)
             .then(function (response) {
                 return response.json()
             })
 
-    deleteCourseById = courseId =>
-        fetch(`http://localhost:8080/api/courses/${courseId}`,
+    deleteModuleById = mId =>
+        fetch(`http://localhost:8080/api/modules/${mId}`,
             {method: 'DELETE'})
 
-    findCourseById = courseId =>
-        fetch(`http://localhost:8080/api/courses/${courseId}`)
+    findModuleById = mId =>
+        fetch(`http://localhost:8080/api/modules/${mId}`)
             .then(function (response) {
                 return response.json()
             })
 
-    updateCourse = (id,newcourse) =>
-        fetch(`http://localhost:8080/api/courses/${id}`,
+    updateModule = (mId,newModule) =>
+        fetch(`http://localhost:8080/api/modules/${mId}`,
             {
                 method: 'PUT',
-                body: JSON.stringify(newcourse),
+                body: JSON.stringify(newModule),
                 headers: {
                     'content-type': 'application/json'
                 }
